@@ -56,9 +56,41 @@ func Every[A any, S ~[]A](slc S, predicate func(A) bool) bool {
 	return true
 }
 
+// Unique take a slice of any type implementing comparable and returns a new slice
+// without duplicates. The first occurrence is kept, with the order preserved
+func Unique[A comparable, S ~[]A](slc S) []A {
+	seen := map[A]bool{}
+	res := make([]A, 0)
+	for _, item := range slc {
+		if _, ok := seen[item]; !ok {
+			res = append(res, item)
+			seen[item] = true
+		}
+	}
+	return res
+}
+
+// Keys returns a slice of the keys of a map
+func Keys[K comparable, V any](m map[K]V) []K {
+	res := make([]K, 0)
+	for k, _ := range m {
+		res = append(res, k)
+	}
+	return res
+}
+
+// Values returns a slice of values of a map
+func Values[K comparable, V any](m map[K]V) []V {
+	res := make([]V, 0)
+	for _, v := range m {
+		res = append(res, v)
+	}
+	return res
+}
+
 // Range returns a slice of int with values from start to end (exclusive), counting by 1
 func Range(start, end int) []int {
-	if start <= end {
+	if start >= end {
 		return make([]int, 0)
 	}
 	rng := make([]int, end - start)
