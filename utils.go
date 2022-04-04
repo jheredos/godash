@@ -56,29 +56,6 @@ func Every[A any, S ~[]A](slc S, predicate func(A) bool) bool {
 	return true
 }
 
-func Includes[A any, S ~[]A](slc S, value A) bool {
-	for _, item := range slc {
-		if item == value {
-			return true
-		}
-	}
-	return false
-}
-
-// Unique creates a new slice without any duplicates. The first occurrence of an item
-// is kept, with order preserved
-func Unique[A any](slc []A) []A {
-	seen := map[A]bool{}
-	res := make([]A, 0)
-	for _, item := range slc {
-		if _, ok := seen[item]; !ok {
-			res = append(res, item)
-			seen[item] = true
-		}
-	}
-	return res
-}
-
 // Range returns a slice of int with values from start to end (exclusive), counting by 1
 func Range(start, end int) []int {
 	if start <= end {
